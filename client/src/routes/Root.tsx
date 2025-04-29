@@ -18,6 +18,7 @@ import TermsAndConditionsModal from '~/components/ui/TermsAndConditionsModal';
 import { useUserTermsQuery, useGetStartupConfig } from '~/data-provider';
 import { Nav, MobileNav } from '~/components/Nav';
 import { Banner } from '~/components/Banners';
+import { fullPaths } from '~/routes/RoutePaths';
 
 export default function Root() {
   const [showTerms, setShowTerms] = useState(false);
@@ -51,7 +52,7 @@ export default function Root() {
 
   const handleDeclineTerms = () => {
     setShowTerms(false);
-    logout('/login?redirect=false');
+    logout(`${fullPaths.login}?redirect=false`);
   };
 
   if (!isAuthenticated) {

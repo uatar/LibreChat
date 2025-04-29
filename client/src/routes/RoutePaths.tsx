@@ -4,6 +4,7 @@ const withBase = (p: string) => `${basePath}${p.startsWith('/') ? '' : '/'}${p}`
 
 export const paths = {
     login: 'login',
+    login2fa: 'login/2fa',
     register: 'register',
     forgotPassword: 'forgot-password',
     resetPassword: 'reset-password',

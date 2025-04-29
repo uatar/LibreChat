@@ -70,7 +70,7 @@ export const router = createBrowserRouter(
               element: <Login />,
             },
             {
-              path: 'login/2fa', // no need to prefix again because 2FA is a subpath of login
+              path: paths.login2fa,
               element: <TwoFactorScreen />,
             },
           ],

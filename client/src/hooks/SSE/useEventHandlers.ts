@@ -35,6 +35,7 @@ import useStepHandler from '~/hooks/SSE/useStepHandler';
 import { useAuthContext } from '~/hooks/AuthContext';
 import { MESSAGE_UPDATE_INTERVAL } from '~/common';
 import { useLiveAnnouncer } from '~/Providers';
+import { fullPaths } from '~/routes/RoutePaths';
 
 type TSyncData = {
   sync: boolean;
@@ -505,8 +506,8 @@ export default function useEventHandlers({
           }
           return update;
         });
-        if (location.pathname === '/c/new') {
-          navigate(`/c/${conversation.conversationId}`, { replace: true });
+        if (location.pathname === fullPaths.newConversation) {
+          navigate(fullPaths.conversation.replace(':conversationId?', conversation.conversationId), { replace: true });
         }
       }
 

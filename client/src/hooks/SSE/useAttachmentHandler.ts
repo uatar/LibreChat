@@ -3,14 +3,17 @@ import { QueryKeys } from 'librechat-data-provider';
 import type { QueryClient } from '@tanstack/react-query';
 import type { TAttachment, EventSubmission } from 'librechat-data-provider';
 import store from '~/store';
+import { basePath } from '~/routes/RoutePaths'
 
 export default function useAttachmentHandler(queryClient?: QueryClient) {
   const setAttachmentsMap = useSetRecoilState(store.messageAttachmentsMap);
 
+  const apiFilesPrefix = `${basePath}/api/files`;
+
   return ({ data }: { data: TAttachment; submission: EventSubmission }) => {
     const { messageId } = data;
 
-    if (queryClient && !data?.filepath?.startsWith('/api/files')) {
+    if (queryClient && !data?.filepath?.startsWith(apiFilesPrefix)) {
       queryClient.setQueryData([QueryKeys.files], (oldData: TAttachment[] | undefined) => {
         return [data, ...(oldData || [])];
       });

@@ -90,6 +90,9 @@ export default defineConfig({
     }),
   ],
   publicDir: './public',
+  define: {
+    'process.env.VITE_DOMAIN_SUBPATH': JSON.stringify(env.VITE_DOMAIN_SUBPATH || ''),
+  },
   build: {
     sourcemap: process.env.NODE_ENV === 'development',
     outDir: './dist',

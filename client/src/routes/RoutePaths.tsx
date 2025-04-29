@@ -9,6 +9,7 @@ export const paths = {
     forgotPassword: 'forgot-password',
     resetPassword: 'reset-password',
     verifyEmail: 'verify',
+    oauthError: 'oauth/error',
     newConversation: 'c/new',
     conversation: 'c/:conversationId?',
     search: 'search',

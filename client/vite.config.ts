@@ -1,10 +1,13 @@
 import path, { resolve } from 'path';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import { compression } from 'vite-plugin-compression2';
 import type { Plugin } from 'vite';
+
+const env = loadEnv('', process.cwd(), '');
+const basePath = env.VITE_DOMAIN_SUBPATH || '/';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -26,6 +29,7 @@ export default defineConfig({
   // Set the directory where environment variables are loaded from and restrict prefixes
   envDir: '../',
   envPrefix: ['VITE_', 'SCRIPT_', 'DOMAIN_', 'ALLOW_'],
+  base: basePath,
   plugins: [
     react(),
     nodePolyfills(),
@@ -46,7 +50,7 @@ export default defineConfig({
       manifest: {
         name: 'LibreChat',
         short_name: 'LibreChat',
-        start_url: '/',
+        start_url: basePath.endsWith('/') ? basePath : basePath + '/',
         display: 'standalone',
         background_color: '#000000',
         theme_color: '#009688',

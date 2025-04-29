@@ -18,6 +18,9 @@ import ChatRoute from './ChatRoute';
 import Search from './Search';
 import Root from './Root';
 
+const RAW_BASE = import.meta.env.VITE_DOMAIN_SUBPATH || '';
+const BASE = RAW_BASE.endsWith('/') ? RAW_BASE.slice(0, -1) : RAW_BASE;
+
 const AuthLayout = () => (
   <AuthContextProvider>
     <Outlet />
@@ -25,73 +28,78 @@ const AuthLayout = () => (
   </AuthContextProvider>
 );
 
-export const router = createBrowserRouter([
+export const router = createBrowserRouter(
+   [
+    {
+      path: 'share/:shareId',
+      element: <ShareRoute />,
+      errorElement: <RouteErrorBoundary />,
+    },
+    {
+      path: '',
+      element: <StartupLayout />,
+      errorElement: <RouteErrorBoundary />,
+      children: [
+        {
+          path: 'register',
+          element: <Registration />,
+        },
+        {
+          path: 'forgot-password',
+          element: <RequestPasswordReset />,
+        },
+        {
+          path: 'reset-password',
+          element: <ResetPassword />,
+        },
+      ],
+    },
+    {
+      path: 'verify',
+      element: <VerifyEmail />,
+      errorElement: <RouteErrorBoundary />,
+    },
+    {
+      element: <AuthLayout />,
+      errorElement: <RouteErrorBoundary />,
+      children: [
+        {
+          path: '',
+          element: <LoginLayout />,
+          children: [
+            {
+              path: 'login',
+              element: <Login />,
+            },
+            {
+              path: 'login/2fa',
+              element: <TwoFactorScreen />,
+            },
+          ],
+        },
+        dashboardRoutes,
+        {
+          path: '',
+          element: <Root />,
+          children: [
+            {
+              index: true,
+              element: <Navigate to="c/new" replace={true} />,
+            },
+            {
+              path: 'c/:conversationId?',
+              element: <ChatRoute />,
+            },
+            {
+              path: 'search',
+              element: <Search />,
+            },
+          ],
+        },
+      ],
+    },
+  ],
   {
-    path: 'share/:shareId',
-    element: <ShareRoute />,
-    errorElement: <RouteErrorBoundary />,
+    basename: BASE,
   },
-  {
-    path: '/',
-    element: <StartupLayout />,
-    errorElement: <RouteErrorBoundary />,
-    children: [
-      {
-        path: 'register',
-        element: <Registration />,
-      },
-      {
-        path: 'forgot-password',
-        element: <RequestPasswordReset />,
-      },
-      {
-        path: 'reset-password',
-        element: <ResetPassword />,
-      },
-    ],
-  },
-  {
-    path: 'verify',
-    element: <VerifyEmail />,
-    errorElement: <RouteErrorBoundary />,
-  },
-  {
-    element: <AuthLayout />,
-    errorElement: <RouteErrorBoundary />,
-    children: [
-      {
-        path: '/',
-        element: <LoginLayout />,
-        children: [
-          {
-            path: 'login',
-            element: <Login />,
-          },
-          {
-            path: 'login/2fa',
-            element: <TwoFactorScreen />,
-          },
-        ],
-      },
-      dashboardRoutes,
-      {
-        path: '/',
-        element: <Root />,
-        children: [
-          {
-            index: true,
-            element: <Navigate to="/c/new" replace={true} />,
-          },
-          {
-            path: 'c/:conversationId?',
-            element: <ChatRoute />,
-          },
-          {
-            path: 'search',
-            element: <Search />,
-          },
-        ],
-      },
-    ],
-  },
-]);
+);

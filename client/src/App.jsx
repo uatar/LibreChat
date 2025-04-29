@@ -50,7 +50,7 @@ export default () => (
   <ScreenshotProvider>
     <App />
     <iframe
-      src="/assets/silence.mp3"
+      src={`${import.meta.env.VITE_DOMAIN_SUBPATH || ''}/assets/silence.mp3`}
       allow="autoplay"
       id="audio"
       title="audio-silence"

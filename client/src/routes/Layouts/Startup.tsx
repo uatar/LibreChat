@@ -4,13 +4,14 @@ import type { TStartupConfig } from 'librechat-data-provider';
 import { useGetStartupConfig } from '~/data-provider';
 import AuthLayout from '~/components/Auth/AuthLayout';
 import { TranslationKeys, useLocalize } from '~/hooks';
+import { fullPaths } from '~/routes/RoutePaths';
 
 const headerMap: Record<string, TranslationKeys> = {
-  '/login': 'com_auth_welcome_back',
-  '/register': 'com_auth_create_account',
-  '/forgot-password': 'com_auth_reset_password',
-  '/reset-password': 'com_auth_reset_password',
-  '/login/2fa': 'com_auth_verify_your_identity',
+  [fullPaths.login]: 'com_auth_welcome_back',
+  [fullPaths.register]: 'com_auth_create_account',
+  [fullPaths.forgotPassword]: 'com_auth_reset_password',
+  [fullPaths.resetPassword]: 'com_auth_reset_password',
+  [fullPaths.login2fa]: 'com_auth_verify_your_identity',
 };
 
 export default function StartupLayout({ isAuthenticated }: { isAuthenticated?: boolean }) {
@@ -30,7 +31,7 @@ export default function StartupLayout({ isAuthenticated }: { isAuthenticated?: b
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/c/new', { replace: true });
+      navigate(fullPaths.newConversation, { replace: true });
     }
     if (data) {
       setStartupConfig(data);

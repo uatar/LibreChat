@@ -17,9 +17,7 @@ import ShareRoute from './ShareRoute';
 import ChatRoute from './ChatRoute';
 import Search from './Search';
 import Root from './Root';
-
-const RAW_BASE = import.meta.env.VITE_DOMAIN_SUBPATH || '';
-const BASE = RAW_BASE.endsWith('/') ? RAW_BASE.slice(0, -1) : RAW_BASE;
+import { basePath, paths } from './RoutePaths';
 
 const AuthLayout = () => (
   <AuthContextProvider>
@@ -29,9 +27,9 @@ const AuthLayout = () => (
 );
 
 export const router = createBrowserRouter(
-   [
+  [
     {
-      path: 'share/:shareId',
+      path: paths.share,
       element: <ShareRoute />,
       errorElement: <RouteErrorBoundary />,
     },
@@ -41,21 +39,21 @@ export const router = createBrowserRouter(
       errorElement: <RouteErrorBoundary />,
       children: [
         {
-          path: 'register',
+          path: paths.register,
           element: <Registration />,
         },
         {
-          path: 'forgot-password',
+          path: paths.forgotPassword,
           element: <RequestPasswordReset />,
         },
         {
-          path: 'reset-password',
+          path: paths.resetPassword,
           element: <ResetPassword />,
         },
       ],
     },
     {
-      path: 'verify',
+      path: paths.verifyEmail,
       element: <VerifyEmail />,
       errorElement: <RouteErrorBoundary />,
     },
@@ -68,11 +66,11 @@ export const router = createBrowserRouter(
           element: <LoginLayout />,
           children: [
             {
-              path: 'login',
+              path: paths.login,
               element: <Login />,
             },
             {
-              path: 'login/2fa',
+              path: 'login/2fa', // no need to prefix again because 2FA is a subpath of login
               element: <TwoFactorScreen />,
             },
           ],
@@ -84,14 +82,14 @@ export const router = createBrowserRouter(
           children: [
             {
               index: true,
-              element: <Navigate to="c/new" replace={true} />,
+              element: <Navigate to={paths.newConversation} replace={true} />,
             },
             {
-              path: 'c/:conversationId?',
+              path: paths.conversation,
               element: <ChatRoute />,
             },
             {
-              path: 'search',
+              path: paths.search,
               element: <Search />,
             },
           ],
@@ -100,6 +98,6 @@ export const router = createBrowserRouter(
     },
   ],
   {
-    basename: BASE,
+    basename: basePath,
   },
 );

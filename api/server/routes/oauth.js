@@ -10,6 +10,7 @@ const {
 } = require('~/server/middleware');
 const { setAuthTokens } = require('~/server/services/AuthService');
 const { logger } = require('~/config');
+const { fullPaths } = require('./paths');
 
 const router = express.Router();
 
@@ -40,7 +41,7 @@ router.get('/error', (req, res) => {
   logger.error('Error in OAuth authentication:', { message: req.session.messages.pop() });
 
   // Redirect to login page with auth_failed parameter to prevent infinite redirect loops
-  res.redirect(`${domains.client}/login?redirect=false`);
+  res.redirect(`${domains.client}${fullPaths.login}?redirect=false`);
 });
 
 /**
@@ -57,7 +58,7 @@ router.get(
 router.get(
   '/google/callback',
   passport.authenticate('google', {
-    failureRedirect: `${domains.client}/oauth/error`,
+    failureRedirect: `${domains.client}${fullPaths.oauthError}`,
     failureMessage: true,
     session: false,
     scope: ['openid', 'profile', 'email'],
@@ -81,7 +82,7 @@ router.get(
 router.get(
   '/facebook/callback',
   passport.authenticate('facebook', {
-    failureRedirect: `${domains.client}/oauth/error`,
+    failureRedirect: `${domains.client}${fullPaths.oauthError}`,
     failureMessage: true,
     session: false,
     scope: ['public_profile'],
@@ -104,7 +105,7 @@ router.get(
 router.get(
   '/openid/callback',
   passport.authenticate('openid', {
-    failureRedirect: `${domains.client}/oauth/error`,
+    failureRedirect: `${domains.client}${fullPaths.oauthError}`,
     failureMessage: true,
     session: false,
   }),
@@ -126,7 +127,7 @@ router.get(
 router.get(
   '/github/callback',
   passport.authenticate('github', {
-    failureRedirect: `${domains.client}/oauth/error`,
+    failureRedirect: `${domains.client}${fullPaths.oauthError}`,
     failureMessage: true,
     session: false,
     scope: ['user:email', 'read:user'],
@@ -149,7 +150,7 @@ router.get(
 router.get(
   '/discord/callback',
   passport.authenticate('discord', {
-    failureRedirect: `${domains.client}/oauth/error`,
+    failureRedirect: `${domains.client}${fullPaths.oauthError}`,
     failureMessage: true,
     session: false,
     scope: ['identify', 'email'],
@@ -171,7 +172,7 @@ router.get(
 router.post(
   '/apple/callback',
   passport.authenticate('apple', {
-    failureRedirect: `${domains.client}/oauth/error`,
+    failureRedirect: `${domains.client}${fullPaths.oauthError}`,
     failureMessage: true,
     session: false,
   }),

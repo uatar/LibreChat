@@ -8,6 +8,7 @@ const {
 } = require('~/server/services/AuthService');
 const { findSession, getUserById, deleteAllUserSessions } = require('~/models');
 const { logger } = require('~/config');
+const { fullPaths } = require('~/server/routes/paths');
 
 const registrationController = async (req, res) => {
   try {
@@ -63,7 +64,7 @@ const refreshController = async (req, res) => {
     const payload = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
     const user = await getUserById(payload.id, '-password -__v -totpSecret');
     if (!user) {
-      return res.status(401).redirect('/login');
+      return res.status(401).redirect(fullPaths.login);
     }
 
     const userId = payload.id;
@@ -83,7 +84,7 @@ const refreshController = async (req, res) => {
       // Retrying from a refresh token request that failed (401)
       res.status(403).send('No session found');
     } else if (payload.exp < Date.now() / 1000) {
-      res.status(403).redirect('/login');
+      res.status(403).redirect(fullPaths.login);
     } else {
       res.status(401).send('Refresh token expired or not found for this user');
     }

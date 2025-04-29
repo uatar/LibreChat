@@ -4,6 +4,7 @@ import type { TLoginUser, TStartupConfig } from 'librechat-data-provider';
 import type { TAuthContext } from '~/common';
 import { useResendVerificationEmail, useGetStartupConfig } from '~/data-provider';
 import { useLocalize } from '~/hooks';
+import { fullPaths } from '~/routes/RoutePaths';
 
 type TLoginFormProps = {
   onSubmit: (data: TLoginUser) => void;
@@ -153,7 +154,7 @@ const LoginForm: React.FC<TLoginFormProps> = ({ onSubmit, startupConfig, error, 
         </div>
         {startupConfig.passwordResetEnabled && (
           <a
-            href="/forgot-password"
+            href={fullPaths.forgotPassword}
             className="inline-flex p-1 text-sm font-medium text-green-600 transition-colors hover:text-green-700 dark:text-green-400 dark:hover:text-green-300"
           >
             {localize('com_auth_password_forgot')}

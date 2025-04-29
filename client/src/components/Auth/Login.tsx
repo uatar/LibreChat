@@ -8,6 +8,7 @@ import { useLocalize } from '~/hooks';
 import LoginForm from './LoginForm';
 import SocialButton from '~/components/Auth/SocialButton';
 import { OpenIDIcon } from '~/components';
+import { fullPaths } from '~/routes/RoutePaths';
 
 function Login() {
   const localize = useLocalize();
@@ -89,7 +90,7 @@ function Login() {
           {' '}
           {localize('com_auth_no_account')}{' '}
           <a
-            href="/register"
+            href={fullPaths.register}
             className="inline-flex p-1 text-sm font-medium text-green-600 transition-colors hover:text-green-700 dark:text-green-400 dark:hover:text-green-300"
           >
             {localize('com_auth_sign_up')}

@@ -6,6 +6,7 @@ import type { TRequestPasswordReset, TRequestPasswordResetResponse } from 'libre
 import type { FC } from 'react';
 import type { TLoginLayoutContext } from '~/common';
 import { useLocalize } from '~/hooks';
+import { fullPaths } from '~/routes/RoutePaths';
 
 const BodyTextWrapper: FC<{ children: ReactNode }> = ({ children }) => {
   return (
@@ -25,7 +26,7 @@ const ResetPasswordBodyText = () => {
       <p>{localize('com_auth_reset_password_if_email_exists')}</p>
       <a
         className="inline-flex text-sm font-medium text-green-600 transition-colors hover:text-green-700 dark:text-green-400 dark:hover:text-green-300"
-        href="/login"
+        href={fullPaths.login}
       >
         {localize('com_auth_back_to_login')}
       </a>

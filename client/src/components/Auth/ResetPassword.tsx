@@ -5,6 +5,7 @@ import { useResetPasswordMutation } from 'librechat-data-provider/react-query';
 import type { TResetPassword } from 'librechat-data-provider';
 import type { TLoginLayoutContext } from '~/common';
 import { useLocalize } from '~/hooks';
+import { fullPaths } from '~/routes/RoutePaths';
 
 function ResetPassword() {
   const localize = useLocalize();
@@ -41,7 +42,7 @@ function ResetPassword() {
           {localize('com_auth_login_with_new_password')}
         </div>
         <button
-          onClick={() => navigate('/login')}
+          onClick={() => navigate(fullPaths.login)}
           aria-label={localize('com_auth_sign_in')}
           className="w-full transform rounded-2xl bg-green-500 px-4 py-3 tracking-wide text-white transition-colors duration-200 hover:bg-green-600 focus:bg-green-600 focus:outline-none"
         >

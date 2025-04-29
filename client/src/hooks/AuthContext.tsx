@@ -22,6 +22,7 @@ import {
 import { TAuthConfig, TUserContext, TAuthContext, TResError } from '~/common';
 import useTimeout from './useTimeout';
 import store from '~/store';
+import { paths } from '~/routes/RoutePaths';
 
 const AuthContext = createContext<TAuthContext | undefined>(undefined);
 
@@ -77,16 +78,16 @@ const AuthContextProvider = ({
       const { user, token, twoFAPending, tempToken } = data;
       if (twoFAPending) {
         // Redirect to the two-factor authentication route.
-        navigate(`/login/2fa?tempToken=${tempToken}`, { replace: true });
+        navigate(`${paths.login2fa}?tempToken=${tempToken}`, { replace: true });
         return;
       }
       setError(undefined);
-      setUserContext({ token, isAuthenticated: true, user, redirect: '/c/new' });
+      setUserContext({ token, isAuthenticated: true, user, redirect: paths.newConversation });
     },
     onError: (error: TResError | unknown) => {
       const resError = error as TResError;
       doSetError(resError.message);
-      navigate('/login', { replace: true });
+      navigate(paths.login, { replace: true });
     },
   });
   const logoutUser = useLogoutUserMutation({
@@ -95,7 +96,7 @@ const AuthContextProvider = ({
         token: undefined,
         isAuthenticated: false,
         user: undefined,
-        redirect: data.redirect ?? '/login',
+        redirect: data.redirect ?? paths.login,
       });
     },
     onError: (error) => {
@@ -104,7 +105,7 @@ const AuthContextProvider = ({
         token: undefined,
         isAuthenticated: false,
         user: undefined,
-        redirect: '/login',
+        redirect: paths.login,
       });
     },
   });
@@ -141,7 +142,7 @@ const AuthContextProvider = ({
           if (authConfig?.test === true) {
             return;
           }
-          navigate('/login');
+          navigate(paths.login);
         }
       },
       onError: (error) => {
@@ -149,7 +150,7 @@ const AuthContextProvider = ({
         if (authConfig?.test === true) {
           return;
         }
-        navigate('/login');
+        navigate(paths.login);
       },
     });
   }, []);
@@ -159,7 +160,7 @@ const AuthContextProvider = ({
       setUser(userQuery.data);
     } else if (userQuery.isError) {
       doSetError((userQuery.error as Error).message);
-      navigate('/login', { replace: true });
+      navigate(paths.login, { replace: true });
     }
     if (error != null && error && isAuthenticated) {
       doSetError(undefined);

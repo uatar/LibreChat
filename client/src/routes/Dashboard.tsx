@@ -6,6 +6,7 @@ import {
   EmptyPromptPreview,
 } from '~/components/Prompts';
 import DashboardRoute from './Layouts/Dashboard';
+import { fullPaths } from './RoutePaths'
 
 const dashboardRoutes = {
   path: 'd/*',
@@ -74,7 +75,7 @@ const dashboardRoutes = {
     },
     {
       path: '*',
-      element: <Navigate to="/d/files" replace={true} />,
+      element: <Navigate to={fullPaths.dashboardFiles} replace={true} />,
     },
   ],
 };

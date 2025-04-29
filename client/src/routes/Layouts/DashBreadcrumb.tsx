@@ -22,6 +22,7 @@ import AdminSettings from '~/components/Prompts/AdminSettings';
 import { useDashboardContext } from '~/Providers';
 // import { PromptsEditorMode } from '~/common';
 import store from '~/store';
+import { fullPaths } from '~/routes/RoutePaths';
 
 const promptsPathPattern = /prompts\/(?!new(?:\/|$)).*$/;
 
@@ -49,8 +50,8 @@ export default function DashBreadcrumb() {
     setPromptsCategory('');
   }, [setPromptsName, setPromptsCategory]);
 
-  const chatLinkHandler = useCustomLink('/c/' + lastConversationId, clickCallback);
-  const promptsLinkHandler = useCustomLink('/d/prompts');
+  const chatLinkHandler = useCustomLink(fullPaths.conversation.replace(':conversationId?', lastConversationId), clickCallback);
+  const promptsLinkHandler = useCustomLink(fullPaths.dashboardPrompts);
 
   const isPromptsPath = useMemo(
     () => promptsPathPattern.test(location.pathname),
@@ -63,7 +64,7 @@ export default function DashBreadcrumb() {
         <BreadcrumbList>
           <BreadcrumbItem className="hover:dark:text-white">
             <BreadcrumbLink
-              href="/"
+              href={fullPaths.newConversation}
               className="flex flex-row items-center gap-1"
               onClick={chatLinkHandler}
             >
@@ -94,7 +95,7 @@ export default function DashBreadcrumb() {
         */}
           <BreadcrumbItem className="hover:dark:text-white">
             <BreadcrumbLink
-              href="/d/prompts"
+              href={fullPaths.dashboardPrompts}
               className="flex flex-row items-center gap-1"
               onClick={promptsLinkHandler}
             >

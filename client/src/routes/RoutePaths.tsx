@@ -10,6 +10,8 @@ export const paths = {
     resetPassword: 'reset-password',
     verifyEmail: 'verify',
     oauthError: 'oauth/error',
+    dashboardPrompts: 'd/prompts',
+    dashboardFiles: 'd/files',
     newConversation: 'c/new',
     conversation: 'c/:conversationId?',
     search: 'search',

@@ -21,7 +21,7 @@ const AppService = require('./services/AppService');
 const staticCache = require('./utils/staticCache');
 const noIndex = require('./middleware/noIndex');
 const routes = require('./routes');
-const domainSubpath = process.env.DOMAIN_SUBPATH || '';
+const { basePath } = require('./routes/paths');
 
 const { PORT, HOST, ALLOW_SOCIAL_LOGIN, DISABLE_COMPRESSION, TRUST_PROXY } = process.env ?? {};
 
@@ -52,7 +52,7 @@ const startServer = async () => {
   app.use(express.json({ limit: '3mb' }));
   app.use(mongoSanitize());
   app.use(express.urlencoded({ extended: true, limit: '3mb' }));
-  app.use(domainSubpath, staticCache(app.locals.paths.dist));
+  app.use(basePath, staticCache(app.locals.paths.dist));
   app.use(staticCache(app.locals.paths.fonts));
   app.use(staticCache(app.locals.paths.assets));
   app.set('trust proxy', trusted_proxy);
@@ -83,38 +83,38 @@ const startServer = async () => {
     configureSocialLogins(app);
   }
 
-  app.use('/oauth', routes.oauth);
+  app.use(`${basePath}/oauth`, routes.oauth);
   /* API Endpoints */
-  app.use('/api/auth', routes.auth);
-  app.use('/api/actions', routes.actions);
-  app.use('/api/keys', routes.keys);
-  app.use('/api/user', routes.user);
-  app.use('/api/ask', routes.ask);
-  app.use('/api/search', routes.search);
-  app.use('/api/edit', routes.edit);
-  app.use('/api/messages', routes.messages);
-  app.use('/api/convos', routes.convos);
-  app.use('/api/presets', routes.presets);
-  app.use('/api/prompts', routes.prompts);
-  app.use('/api/categories', routes.categories);
-  app.use('/api/tokenizer', routes.tokenizer);
-  app.use('/api/endpoints', routes.endpoints);
-  app.use('/api/balance', routes.balance);
-  app.use('/api/models', routes.models);
-  app.use('/api/plugins', routes.plugins);
-  app.use('/api/config', routes.config);
-  app.use('/api/assistants', routes.assistants);
-  app.use('/api/files', await routes.files.initialize());
-  app.use('/images/', validateImageRequest, routes.staticRoute);
-  app.use('/api/share', routes.share);
-  app.use('/api/roles', routes.roles);
-  app.use('/api/agents', routes.agents);
-  app.use('/api/banner', routes.banner);
-  app.use('/api/bedrock', routes.bedrock);
+  app.use(`${basePath}/api/auth`, routes.auth);
+  app.use(`${basePath}/api/actions`, routes.actions);
+  app.use(`${basePath}/api/keys`, routes.keys);
+  app.use(`${basePath}/api/user`, routes.user);
+  app.use(`${basePath}/api/ask`, routes.ask);
+  app.use(`${basePath}/api/search`, routes.search);
+  app.use(`${basePath}/api/edit`, routes.edit);
+  app.use(`${basePath}/api/messages`, routes.messages);
+  app.use(`${basePath}/api/convos`, routes.convos);
+  app.use(`${basePath}/api/presets`, routes.presets);
+  app.use(`${basePath}/api/prompts`, routes.prompts);
+  app.use(`${basePath}/api/categories`, routes.categories);
+  app.use(`${basePath}/api/tokenizer`, routes.tokenizer);
+  app.use(`${basePath}/api/endpoints`, routes.endpoints);
+  app.use(`${basePath}/api/balance`, routes.balance);
+  app.use(`${basePath}/api/models`, routes.models);
+  app.use(`${basePath}/api/plugins`, routes.plugins);
+  app.use(`${basePath}/api/config`, routes.config);
+  app.use(`${basePath}/api/assistants`, routes.assistants);
+  app.use(`${basePath}/api/files`, await routes.files.initialize());
+  app.use(`${basePath}/images/`, validateImageRequest, routes.staticRoute);
+  app.use(`${basePath}/api/share`, routes.share);
+  app.use(`${basePath}/api/roles`, routes.roles);
+  app.use(`${basePath}/api/agents`, routes.agents);
+  app.use(`${basePath}/api/banner`, routes.banner);
+  app.use(`${basePath}/api/bedrock`, routes.bedrock);
 
-  app.use('/api/tags', routes.tags);
+  app.use(`${basePath}/api/tags`, routes.tags);
 
-  app.get(`${domainSubpath}/*`, (req, res) => {
+  app.get(`${basePath}/*`, (req, res) => {
     res.set({
       'Cache-Control': process.env.INDEX_CACHE_CONTROL || 'no-cache, no-store, must-revalidate',
       Pragma: process.env.INDEX_PRAGMA || 'no-cache',
@@ -131,10 +131,10 @@ const startServer = async () => {
   app.listen(port, host, () => {
     if (host == '0.0.0.0') {
       logger.info(
-        `Server listening on all interfaces at port ${port}. Use http://localhost:${port} to access it`,
+        `Server listening on all interfaces at port ${port}. Use http://localhost:${port}${basePath} to access it`,
       );
     } else {
-      logger.info(`Server listening at http://${host == '0.0.0.0' ? 'localhost' : host}:${port}`);
+      logger.info(`Server listening at http://${host === '0.0.0.0' ? 'localhost' : host}:${port}${basePath}`);
     }
   });
 };

@@ -1,6 +1,9 @@
 import type { AssistantsEndpoint } from './schemas';
 import * as q from './types/queries';
 
+const SUBPATH = process.env.VITE_DOMAIN_SUBPATH || '';
+const basePath = SUBPATH.endsWith('/') ? SUBPATH.slice(0, -1) : SUBPATH;
+
 // Testing this buildQuery function
 const buildQuery = (params: Record<string, unknown>): string => {
   const query = Object.entries(params)
@@ -20,30 +23,30 @@ const buildQuery = (params: Record<string, unknown>): string => {
   return query ? `?${query}` : '';
 };
 
-export const health = () => '/health';
-export const user = () => '/api/user';
+export const health = () => `${basePath}/health`;
+export const user = () => `${basePath}/api/user`;
 
-export const balance = () => '/api/balance';
+export const balance = () => `${basePath}/api/balance`;
 
-export const userPlugins = () => '/api/user/plugins';
+export const userPlugins = () => `${basePath}/api/user/plugins`;
 
-export const deleteUser = () => '/api/user/delete';
+export const deleteUser = () => `${basePath}/api/user/delete`;
 
 export const messages = (params: q.MessagesListParams) => {
   const { conversationId, messageId, ...rest } = params;
 
   if (conversationId && messageId) {
-    return `/api/messages/${conversationId}/${messageId}`;
+    return `${basePath}/api/messages/${conversationId}/${messageId}`;
   }
 
   if (conversationId) {
-    return `/api/messages/${conversationId}`;
+    return `${basePath}/api/messages/${conversationId}`;
   }
 
-  return `/api/messages${buildQuery(rest)}`;
+  return `${basePath}/api/messages${buildQuery(rest)}`;
 };
 
-const shareRoot = '/api/share';
+const shareRoot = `${basePath}/api/share`;
 export const shareMessages = (shareId: string) => `${shareRoot}/${shareId}`;
 export const getSharedLink = (conversationId: string) => `${shareRoot}/link/${conversationId}`;
 export const getSharedLinks = (
@@ -55,12 +58,12 @@ export const getSharedLinks = (
   cursor?: string,
 ) =>
   `${shareRoot}?pageSize=${pageSize}&isPublic=${isPublic}&sortBy=${sortBy}&sortDirection=${sortDirection}${
-    search ? `&search=${search}` : ''
+      search ? `&search=${search}` : ''
   }${cursor ? `&cursor=${cursor}` : ''}`;
 export const createSharedLink = (conversationId: string) => `${shareRoot}/${conversationId}`;
 export const updateSharedLink = (shareId: string) => `${shareRoot}/${shareId}`;
 
-const keysEndpoint = '/api/keys';
+const keysEndpoint = `${basePath}/api/keys`;
 
 export const keys = () => keysEndpoint;
 
@@ -70,9 +73,9 @@ export const revokeUserKey = (name: string) => `${keysEndpoint}/${name}`;
 
 export const revokeAllUserKeys = () => `${keysEndpoint}?all=true`;
 
-export const abortRequest = (endpoint: string) => `/api/ask/${endpoint}/abort`;
+export const abortRequest = (endpoint: string) => `${basePath}/api/ask/${endpoint}/abort`;
 
-export const conversationsRoot = '/api/convos';
+export const conversationsRoot = `${basePath}/api/convos`;
 
 export const conversations = (params: q.ConversationListParams) => {
   return `${conversationsRoot}${buildQuery(params)}`;
@@ -95,48 +98,48 @@ export const forkConversation = () => `${conversationsRoot}/fork`;
 export const duplicateConversation = () => `${conversationsRoot}/duplicate`;
 
 export const search = (q: string, cursor?: string | null) =>
-  `/api/search?q=${q}${cursor ? `&cursor=${cursor}` : ''}`;
+  `${basePath}/api/search?q=${q}${cursor ? `&cursor=${cursor}` : ''}`;
 
-export const searchEnabled = () => '/api/search/enable';
+export const searchEnabled = () => `${basePath}/api/search/enable`;
 
-export const presets = () => '/api/presets';
+export const presets = () => `${basePath}/api/presets`;
 
-export const deletePreset = () => '/api/presets/delete';
+export const deletePreset = () => `${basePath}/api/presets/delete`;
 
-export const aiEndpoints = () => '/api/endpoints';
+export const aiEndpoints = () => `${basePath}/api/endpoints`;
 
-export const endpointsConfigOverride = () => '/api/endpoints/config/override';
+export const endpointsConfigOverride = () => `${basePath}/api/endpoints/config/override`;
 
-export const models = () => '/api/models';
+export const models = () => `${basePath}/api/models`;
 
-export const tokenizer = () => '/api/tokenizer';
+export const tokenizer = () => `${basePath}/api/tokenizer`;
 
-export const login = () => '/api/auth/login';
+export const login = () => `${basePath}/api/auth/login`;
 
-export const logout = () => '/api/auth/logout';
+export const logout = () => `${basePath}/api/auth/logout`;
 
-export const register = () => '/api/auth/register';
+export const register = () => `${basePath}/api/auth/register`;
 
-export const loginFacebook = () => '/api/auth/facebook';
+export const loginFacebook = () => `${basePath}/api/auth/facebook`;
 
-export const loginGoogle = () => '/api/auth/google';
+export const loginGoogle = () => `${basePath}/api/auth/google`;
 
 export const refreshToken = (retry?: boolean) =>
-  `/api/auth/refresh${retry === true ? '?retry=true' : ''}`;
+  `${basePath}/api/auth/refresh${retry === true ? '?retry=true' : ''}`;
 
-export const requestPasswordReset = () => '/api/auth/requestPasswordReset';
+export const requestPasswordReset = () => `${basePath}/api/auth/requestPasswordReset`;
 
-export const resetPassword = () => '/api/auth/resetPassword';
+export const resetPassword = () => `${basePath}/api/auth/resetPassword`;
 
-export const verifyEmail = () => '/api/user/verify';
+export const verifyEmail = () => `${basePath}/api/user/verify`;
 
-export const resendVerificationEmail = () => '/api/user/verify/resend';
+export const resendVerificationEmail = () => `${basePath}/api/user/verify/resend`;
 
-export const plugins = () => '/api/plugins';
+export const plugins = () => `${basePath}/api/plugins`;
 
-export const config = () => '/api/config';
+export const config = () => `${basePath}/api/config`;
 
-export const prompts = () => '/api/prompts';
+export const prompts = () => `${basePath}/api/prompts`;
 
 export const assistants = ({
   path = '',
@@ -151,7 +154,7 @@ export const assistants = ({
   version: number | string;
   isAvatar?: boolean;
 }) => {
-  let url = isAvatar === true ? `${images()}/assistants` : `/api/assistants/v${version}`;
+  let url = isAvatar === true ? `${images()}/assistants` : `${basePath}/api/assistants/v${version}`;
 
   if (path && path !== '') {
     url += `/${path}`;
@@ -173,7 +176,7 @@ export const assistants = ({
 };
 
 export const agents = ({ path = '', options }: { path?: string; options?: object }) => {
-  let url = '/api/agents';
+  let url = `${basePath}/api/agents`;
 
   if (path && path !== '') {
     url += `/${path}`;
@@ -187,7 +190,7 @@ export const agents = ({ path = '', options }: { path?: string; options?: object
   return url;
 };
 
-export const files = () => '/api/files';
+export const files = () => `${basePath}/api/files`;
 
 export const images = () => `${files()}/images`;
 
@@ -244,36 +247,37 @@ export const deletePrompt = ({ _id, groupId }: { _id: string; groupId: string })
   return `${prompts()}/${_id}?groupId=${groupId}`;
 };
 
-export const getCategories = () => '/api/categories';
+export const getCategories = () => `${basePath}/api/categories`;
 
 export const getAllPromptGroups = () => `${prompts()}/all`;
 
 /* Roles */
-export const roles = () => '/api/roles';
+export const roles = () => `${basePath}/api/roles`;
 export const getRole = (roleName: string) => `${roles()}/${roleName.toLowerCase()}`;
 export const updatePromptPermissions = (roleName: string) => `${getRole(roleName)}/prompts`;
 export const updateAgentPermissions = (roleName: string) => `${getRole(roleName)}/agents`;
 
 /* Conversation Tags */
 export const conversationTags = (tag?: string) =>
-  `/api/tags${tag != null && tag ? `/${encodeURIComponent(tag)}` : ''}`;
+  `${basePath}/api/tags${tag != null && tag ? `/${encodeURIComponent(tag)}` : ''}`;
 
 export const conversationTagsList = (pageNumber: string, sort?: string, order?: string) =>
   `${conversationTags()}/list?pageNumber=${pageNumber}${sort ? `&sort=${sort}` : ''}${
-    order ? `&order=${order}` : ''
+      order ? `&order=${order}` : ''
   }`;
 
 export const addTagToConversation = (conversationId: string) =>
   `${conversationTags()}/convo/${conversationId}`;
 
-export const userTerms = () => '/api/user/terms';
-export const acceptUserTerms = () => '/api/user/terms/accept';
-export const banner = () => '/api/banner';
+export const userTerms = () => `${basePath}/api/user/terms`;
+export const acceptUserTerms = () => `${basePath}/api/user/terms/accept`;
+export const banner = () => `${basePath}/api/banner`;
 
 // Two-Factor Endpoints
-export const enableTwoFactor = () => '/api/auth/2fa/enable';
-export const verifyTwoFactor = () => '/api/auth/2fa/verify';
-export const confirmTwoFactor = () => '/api/auth/2fa/confirm';
-export const disableTwoFactor = () => '/api/auth/2fa/disable';
-export const regenerateBackupCodes = () => '/api/auth/2fa/backup/regenerate';
-export const verifyTwoFactorTemp = () => '/api/auth/2fa/verify-temp';
+export const enableTwoFactor = () => `${basePath}/api/auth/2fa/enable`;
+export const verifyTwoFactor = () => `${basePath}/api/auth/2fa/verify`;
+export const confirmTwoFactor = () => `${basePath}/api/auth/2fa/confirm`;
+export const disableTwoFactor = () => `${basePath}/api/auth/2fa/disable`;
+export const regenerateBackupCodes = () => `${basePath}/api/auth/2fa/backup/regenerate`;
+export const verifyTwoFactorTemp = () => `${basePath}/api/auth/2fa/verify-temp`;
+

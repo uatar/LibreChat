@@ -6,6 +6,7 @@ import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot, Label } from 
 import { useVerifyTwoFactorTempMutation } from '~/data-provider';
 import { useToastContext } from '~/Providers';
 import { useLocalize } from '~/hooks';
+import { basePath } from '~/routes/RoutePaths';
 
 interface VerifyPayload {
   tempToken: string;
@@ -35,7 +36,7 @@ const TwoFactorScreen: React.FC = React.memo(() => {
   const { mutate: verifyTempMutate } = useVerifyTwoFactorTempMutation({
     onSuccess: (result) => {
       if (result.token != null && result.token !== '') {
-        window.location.href = '/';
+        window.location.href = basePath || '/';
       }
     },
     onMutate: () => {

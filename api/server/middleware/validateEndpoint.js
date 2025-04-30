@@ -8,7 +8,7 @@ function validateEndpoint(req, res, next) {
     return handleError(res, { text: 'Prompt empty or too short' });
   }
 
-  const pathEndpoint = req.baseUrl.split('/')[3];
+  const pathEndpoint = req.baseUrl.split('/').pop();
 
   if (endpoint !== pathEndpoint) {
     return handleError(res, { text: 'Illegal request: Endpoint mismatch' });

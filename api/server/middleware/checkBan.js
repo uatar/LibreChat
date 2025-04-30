@@ -7,6 +7,7 @@ const denyRequest = require('./denyRequest');
 const { getLogStores } = require('~/cache');
 const { findUser } = require('~/models');
 const { logger } = require('~/config');
+const { basePath } = require('~/server/routes/paths');
 
 const banCache = new Keyv({ store: keyvMongo, namespace: ViolationTypes.BAN, ttl: 0 });
 const message = 'Your account has been temporarily banned due to violations of our service.';
@@ -27,7 +28,7 @@ const banResponse = async (req, res) => {
   const { baseUrl } = req;
   if (!ua.browser.name) {
     return res.status(403).json({ message });
-  } else if (baseUrl === '/api/ask' || baseUrl === '/api/edit') {
+  } else if (baseUrl === `${basePath}/api/ask` || baseUrl === `${basePath}/api/edit`) {
     return await denyRequest(req, res, { type: ViolationTypes.BAN });
   }
 

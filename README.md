@@ -119,6 +119,10 @@
   - Configure Proxy, Reverse Proxy, Docker, & many Deployment options  
   - Use completely local or deploy on the cloud
 
+- 🧭️ **Reverse Proxy / Subpath Support**:
+  - LibreChat now supports deployment under a reverse proxy or subpath (e.g., /librechat).
+  - To enable this, simply uncomment and set DOMAIN_SUBPATH=/your-subpath in your main .env file — no changes needed elsewhere.
+
 - 📖 **Open-Source & Community**:  
   - Completely Open-Source & Built in Public  
   - Community-driven development, support, and feedback

@@ -22,7 +22,7 @@ import AdminSettings from '~/components/Prompts/AdminSettings';
 import { useDashboardContext } from '~/Providers';
 // import { PromptsEditorMode } from '~/common';
 import store from '~/store';
-import { fullPaths } from '~/routes/RoutePaths';
+import { basePath, fullPaths } from '~/routes/RoutePaths';
 
 const promptsPathPattern = /prompts\/(?!new(?:\/|$)).*$/;
 
@@ -64,7 +64,7 @@ export default function DashBreadcrumb() {
         <BreadcrumbList>
           <BreadcrumbItem className="hover:dark:text-white">
             <BreadcrumbLink
-              href={fullPaths.newConversation}
+              href={basePath || '/'}
               className="flex flex-row items-center gap-1"
               onClick={chatLinkHandler}
             >

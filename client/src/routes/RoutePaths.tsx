@@ -1,4 +1,4 @@
-const SUBPATH = import.meta.env.VITE_DOMAIN_SUBPATH || '';
+const SUBPATH = import.meta.env.DOMAIN_SUBPATH || '';
 
 const withBase = (p: string) => `${basePath}${p.startsWith('/') ? '' : '/'}${p}`;
 

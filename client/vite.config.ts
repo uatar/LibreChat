@@ -6,8 +6,8 @@ import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import { compression } from 'vite-plugin-compression2';
 import type { Plugin } from 'vite';
 
-const env = loadEnv('', process.cwd(), '');
-const basePath = env.VITE_DOMAIN_SUBPATH || '/';
+const env = loadEnv('', '../', '');
+const basePath = env.DOMAIN_SUBPATH || '/';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -91,7 +91,7 @@ export default defineConfig({
   ],
   publicDir: './public',
   define: {
-    'process.env.VITE_DOMAIN_SUBPATH': JSON.stringify(env.VITE_DOMAIN_SUBPATH || ''),
+    'process.env.DOMAIN_SUBPATH': JSON.stringify(env.DOMAIN_SUBPATH || ''),
   },
   build: {
     sourcemap: process.env.NODE_ENV === 'development',

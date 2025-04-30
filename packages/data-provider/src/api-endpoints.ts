@@ -1,7 +1,7 @@
 import type { AssistantsEndpoint } from './schemas';
 import * as q from './types/queries';
 
-const SUBPATH = process.env.VITE_DOMAIN_SUBPATH || '';
+const SUBPATH = process.env.DOMAIN_SUBPATH || '';
 const basePath = SUBPATH.endsWith('/') ? SUBPATH.slice(0, -1) : SUBPATH;
 
 // Testing this buildQuery function

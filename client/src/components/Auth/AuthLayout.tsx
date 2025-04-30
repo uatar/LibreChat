@@ -5,6 +5,7 @@ import SocialLoginRender from './SocialLoginRender';
 import { ThemeSelector } from '~/components/ui';
 import { Banner } from '../Banners';
 import Footer from './Footer';
+import { basePath } from '~/routes/RoutePaths'
 
 const ErrorRender = ({ children }: { children: React.ReactNode }) => (
   <div className="mt-16 flex justify-center">
@@ -63,7 +64,7 @@ function AuthLayout({
       <BlinkAnimation active={isFetching}>
         <div className="mt-6 h-10 w-full bg-cover">
           <img
-            src={`${import.meta.env.VITE_DOMAIN_SUBPATH || ''}/assets/logo.svg`}
+            src={`${basePath}/assets/logo.svg`}
             className="h-full w-full object-contain"
             alt={localize('com_ui_logo', { 0: startupConfig?.appTitle ?? 'LibreChat' })}
           />

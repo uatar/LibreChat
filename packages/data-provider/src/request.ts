@@ -134,7 +134,7 @@ axios.interceptors.response.use(
             `Refresh token failed from shared link, attempting request to ${originalRequest.url}`,
           );
         } else {
-          window.location.href = `${(process.env.VITE_DOMAIN_SUBPATH || '').replace(/\/$/, '')}/login`;
+          window.location.href = `${(process.env.DOMAIN_SUBPATH || '').replace(/\/$/, '')}/login`;
         }
       } catch (err) {
         processQueue(err as AxiosError, null);

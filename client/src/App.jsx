@@ -10,6 +10,7 @@ import { ToastProvider } from './Providers';
 import Toast from './components/ui/Toast';
 import { LiveAnnouncer } from '~/a11y';
 import { router } from './routes';
+import { basePath } from './routes/RoutePaths'
 
 const App = () => {
   const { setError } = useApiErrorBoundary();
@@ -50,7 +51,7 @@ export default () => (
   <ScreenshotProvider>
     <App />
     <iframe
-      src={`${import.meta.env.VITE_DOMAIN_SUBPATH || ''}/assets/silence.mp3`}
+      src={`${basePath}/assets/silence.mp3`}
       allow="autoplay"
       id="audio"
       title="audio-silence"

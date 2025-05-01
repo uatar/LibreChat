@@ -5,7 +5,7 @@ import { QueryKeys, Constants } from 'librechat-data-provider';
 import type { TConversation, TEndpointsConfig, TModelsConfig } from 'librechat-data-provider';
 import { buildDefaultConvo, getDefaultEndpoint, getEndpointField, logger } from '~/utils';
 import store from '~/store';
-import { fullPaths } from '~/routes/RoutePaths';
+import { relativePaths } from '~/routes/RoutePaths';
 
 const useNavigateToConvo = (index = 0) => {
   const navigate = useNavigate();
@@ -61,7 +61,7 @@ const useNavigateToConvo = (index = 0) => {
     clearAllConversations(true);
     setConversation(convo);
     queryClient.setQueryData([QueryKeys.messages, currentConvoId], []);
-    navigate(fullPaths.conversation.replace(':conversationId?', convo.conversationId ?? Constants.NEW_CONVO), { state: { focusChat: true } });
+    navigate(relativePaths.conversation.replace(':conversationId?', convo.conversationId ?? Constants.NEW_CONVO), { state: { focusChat: true } });
   };
 
   return {

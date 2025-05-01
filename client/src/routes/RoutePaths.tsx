@@ -20,6 +20,10 @@ export const paths = {
 
 export const basePath = SUBPATH.endsWith('/') ? SUBPATH.slice(0, -1) : SUBPATH;
 
+export const relativePaths = Object.fromEntries(
+    Object.entries(paths).map(([key, value]) => [key, `/${value}`])
+) as Record<keyof typeof paths, string>;
+
 export const fullPaths = Object.fromEntries(
     Object.entries(paths).map(([key, value]) => [key, withBase(value)]),
 ) as Record<keyof typeof paths, string>;

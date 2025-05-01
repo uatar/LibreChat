@@ -6,8 +6,8 @@ import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import { compression } from 'vite-plugin-compression2';
 import type { Plugin } from 'vite';
 
-const env = loadEnv('', '../', '');
-const basePath = env.DOMAIN_SUBPATH || '/';
+const SUBPATH = loadEnv('', '../', '').DOMAIN_SUBPATH;
+const basePath = SUBPATH || '/';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -16,11 +16,11 @@ export default defineConfig({
     port: 3090,
     strictPort: false,
     proxy: {
-      '/api': {
+      [`${basePath}/api`]: {
         target: 'http://localhost:3080',
         changeOrigin: true,
       },
-      '/oauth': {
+      [`${basePath}/oauth`]: {
         target: 'http://localhost:3080',
         changeOrigin: true,
       },
@@ -56,27 +56,27 @@ export default defineConfig({
         theme_color: '#009688',
         icons: [
           {
-            src: '/assets/favicon-32x32.png',
+            src: `${basePath}/assets/favicon-32x32.png`,
             sizes: '32x32',
             type: 'image/png',
           },
           {
-            src: '/assets/favicon-16x16.png',
+            src: `${basePath}/assets/favicon-16x16.png`,
             sizes: '16x16',
             type: 'image/png',
           },
           {
-            src: '/assets/apple-touch-icon-180x180.png',
+            src: `${basePath}/assets/apple-touch-icon-180x180.png`,
             sizes: '180x180',
             type: 'image/png',
           },
           {
-            src: '/assets/icon-192x192.png',
+            src: `${basePath}/assets/icon-192x192.png`,
             sizes: '192x192',
             type: 'image/png',
           },
           {
-            src: '/assets/maskable-icon.png',
+            src: `${basePath}/assets/maskable-icon.png`,
             sizes: '512x512',
             type: 'image/png',
             purpose: 'maskable',
@@ -91,7 +91,7 @@ export default defineConfig({
   ],
   publicDir: './public',
   define: {
-    'process.env.DOMAIN_SUBPATH': JSON.stringify(env.DOMAIN_SUBPATH || ''),
+    'process.env.DOMAIN_SUBPATH': JSON.stringify(SUBPATH || ''),
   },
   build: {
     sourcemap: process.env.NODE_ENV === 'development',

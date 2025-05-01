@@ -7,6 +7,9 @@ import { fileConfigSchema } from './file-config';
 import { FileSources } from './types/files';
 import { MCPServersSchema } from './mcp';
 
+const SUBPATH = process.env.DOMAIN_SUBPATH || '';
+const basePath = SUBPATH.endsWith('/') ? SUBPATH.slice(0, -1) : SUBPATH;
+
 export const defaultSocialLogins = ['google', 'facebook', 'openid', 'github', 'discord'];
 
 export const defaultRetrievalModels = [
@@ -811,17 +814,17 @@ export const initialModelsConfig: TModelsConfig = {
 };
 
 export const EndpointURLs: { [key in EModelEndpoint]: string } = {
-  [EModelEndpoint.openAI]: `/api/ask/${EModelEndpoint.openAI}`,
-  [EModelEndpoint.google]: `/api/ask/${EModelEndpoint.google}`,
-  [EModelEndpoint.custom]: `/api/ask/${EModelEndpoint.custom}`,
-  [EModelEndpoint.anthropic]: `/api/ask/${EModelEndpoint.anthropic}`,
-  [EModelEndpoint.gptPlugins]: `/api/ask/${EModelEndpoint.gptPlugins}`,
-  [EModelEndpoint.azureOpenAI]: `/api/ask/${EModelEndpoint.azureOpenAI}`,
-  [EModelEndpoint.chatGPTBrowser]: `/api/ask/${EModelEndpoint.chatGPTBrowser}`,
-  [EModelEndpoint.azureAssistants]: '/api/assistants/v1/chat',
-  [EModelEndpoint.assistants]: '/api/assistants/v2/chat',
-  [EModelEndpoint.agents]: `/api/${EModelEndpoint.agents}/chat`,
-  [EModelEndpoint.bedrock]: `/api/${EModelEndpoint.bedrock}/chat`,
+  [EModelEndpoint.openAI]: `${basePath}/api/ask/${EModelEndpoint.openAI}`,
+  [EModelEndpoint.google]: `${basePath}/api/ask/${EModelEndpoint.google}`,
+  [EModelEndpoint.custom]: `${basePath}/api/ask/${EModelEndpoint.custom}`,
+  [EModelEndpoint.anthropic]: `${basePath}/api/ask/${EModelEndpoint.anthropic}`,
+  [EModelEndpoint.gptPlugins]: `${basePath}/api/ask/${EModelEndpoint.gptPlugins}`,
+  [EModelEndpoint.azureOpenAI]: `${basePath}/api/ask/${EModelEndpoint.azureOpenAI}`,
+  [EModelEndpoint.chatGPTBrowser]: `${basePath}/api/ask/${EModelEndpoint.chatGPTBrowser}`,
+  [EModelEndpoint.azureAssistants]: `${basePath}/api/assistants/v1/chat`,
+  [EModelEndpoint.assistants]: `${basePath}/api/assistants/v2/chat`,
+  [EModelEndpoint.agents]: `${basePath}/api/${EModelEndpoint.agents}/chat`,
+  [EModelEndpoint.bedrock]: `${basePath}/api/${EModelEndpoint.bedrock}/chat`,
 };
 
 export const modularEndpoints = new Set<EModelEndpoint | string>([

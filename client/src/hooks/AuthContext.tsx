@@ -22,7 +22,7 @@ import {
 import { TAuthConfig, TUserContext, TAuthContext, TResError } from '~/common';
 import useTimeout from './useTimeout';
 import store from '~/store';
-import { paths } from '~/routes/RoutePaths';
+import {paths, relativePaths} from '~/routes/RoutePaths';
 
 const AuthContext = createContext<TAuthContext | undefined>(undefined);
 
@@ -78,7 +78,7 @@ const AuthContextProvider = ({
       const { user, token, twoFAPending, tempToken } = data;
       if (twoFAPending) {
         // Redirect to the two-factor authentication route.
-        navigate(`${paths.login2fa}?tempToken=${tempToken}`, { replace: true });
+        navigate(`${relativePaths.login2fa}?tempToken=${tempToken}`, { replace: true });
         return;
       }
       setError(undefined);

@@ -7,6 +7,7 @@ import ChatGroupItem from '~/components/Prompts/Groups/ChatGroupItem';
 import { useGetStartupConfig } from '~/data-provider';
 import { useLocalize, useHasAccess } from '~/hooks';
 import { Button, Skeleton } from '~/components/ui';
+import { relativePaths } from "~/routes/RoutePaths";
 
 export default function List({
   groups = [],
@@ -33,7 +34,7 @@ export default function List({
           <Button
             variant="outline"
             className={`w-full bg-transparent ${isChatRoute ? '' : 'mx-2'}`}
-            onClick={() => navigate('/d/prompts/new')}
+            onClick={() => navigate(relativePaths.dashboardPromptsNew)}
           >
             <Plus className="size-4" aria-hidden />
             {localize('com_ui_create_prompt')}

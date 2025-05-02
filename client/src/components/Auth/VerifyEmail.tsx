@@ -4,7 +4,7 @@ import { useVerifyEmailMutation, useResendVerificationEmail } from '~/data-provi
 import { ThemeSelector } from '~/components/ui';
 import { Spinner } from '~/components/svg';
 import { useLocalize } from '~/hooks';
-import { fullPaths } from '~/routes/RoutePaths';
+import { relativePaths } from '~/routes/RoutePaths';
 
 function RequestPasswordReset() {
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ function RequestPasswordReset() {
       setCountdown((prevCountdown) => {
         if (prevCountdown <= 1) {
           clearInterval(timer);
-          navigate(fullPaths.newConversation, { replace: true });
+          navigate(relativePaths.newConversation, { replace: true });
           return 0;
         }
         return prevCountdown - 1;

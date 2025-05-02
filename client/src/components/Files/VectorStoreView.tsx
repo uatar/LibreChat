@@ -3,6 +3,7 @@ import VectorStoreSidePanel from './VectorStore/VectorStoreSidePanel';
 import FilesSectionSelector from './FilesSectionSelector';
 import { Button } from '../ui';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
+import { relativePaths } from '~/routes/RoutePaths';
 
 export default function VectorStoreView() {
   const params = useParams();
@@ -16,7 +17,7 @@ export default function VectorStoreView() {
           variant={'outline'}
           size={'sm'}
           onClick={() => {
-            navigate('/d/vector-stores');
+            navigate(relativePaths.dashboardVectorStores);
           }}
         >
           Go back

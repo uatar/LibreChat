@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from '../ui';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { relativePaths } from '~/routes/RoutePaths';
 
 export default function FilesSectionSelector() {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ export default function FilesSectionSelector() {
           style={selectedPage === '/vector-stores' ? darkButton : lightButton}
           onClick={() => {
             selectedPage = '/vector-stores';
-            navigate('/d/vector-stores');
+            navigate(relativePaths.dashboardVectorStores);
           }}
         >
           Vector Stores
@@ -37,7 +38,7 @@ export default function FilesSectionSelector() {
           style={selectedPage === '/files' ? darkButton : lightButton}
           onClick={() => {
             selectedPage = '/files';
-            navigate('/d/files');
+            navigate(relativePaths.dashboardFiles);
           }}
         >
           Files

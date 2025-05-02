@@ -4,6 +4,7 @@ import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import FilesSectionSelector from './FilesSectionSelector';
 import { useLocalize } from '~/hooks';
 import { Button } from '../ui';
+import { relativePaths } from '~/routes/RoutePaths';
 
 export default function FilesListView() {
   const params = useParams();
@@ -19,7 +20,7 @@ export default function FilesListView() {
             variant={'outline'}
             size={'sm'}
             onClick={() => {
-              navigate('/d/files');
+              navigate(relativePaths.dashboardFiles);
             }}
           >
             {localize('com_ui_go_back')}

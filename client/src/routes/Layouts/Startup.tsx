@@ -4,7 +4,7 @@ import type { TStartupConfig } from 'librechat-data-provider';
 import { useGetStartupConfig } from '~/data-provider';
 import AuthLayout from '~/components/Auth/AuthLayout';
 import { TranslationKeys, useLocalize } from '~/hooks';
-import { fullPaths } from '~/routes/RoutePaths';
+import { relativePaths, fullPaths } from '~/routes/RoutePaths';
 
 const headerMap: Record<string, TranslationKeys> = {
   [fullPaths.login]: 'com_auth_welcome_back',
@@ -31,7 +31,7 @@ export default function StartupLayout({ isAuthenticated }: { isAuthenticated?: b
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate(fullPaths.newConversation, { replace: true });
+      navigate(relativePaths.newConversation, { replace: true });
     }
     if (data) {
       setStartupConfig(data);

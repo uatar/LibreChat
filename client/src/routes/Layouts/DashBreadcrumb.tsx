@@ -22,7 +22,7 @@ import AdminSettings from '~/components/Prompts/AdminSettings';
 import { useDashboardContext } from '~/Providers';
 // import { PromptsEditorMode } from '~/common';
 import store from '~/store';
-import { basePath, fullPaths } from '~/routes/RoutePaths';
+import { basePath, relativePaths, fullPaths } from '~/routes/RoutePaths';
 
 const promptsPathPattern = /prompts\/(?!new(?:\/|$)).*$/;
 
@@ -50,8 +50,8 @@ export default function DashBreadcrumb() {
     setPromptsCategory('');
   }, [setPromptsName, setPromptsCategory]);
 
-  const chatLinkHandler = useCustomLink(fullPaths.conversation.replace(':conversationId?', lastConversationId), clickCallback);
-  const promptsLinkHandler = useCustomLink(fullPaths.dashboardPrompts);
+  const chatLinkHandler = useCustomLink(relativePaths.conversation.replace(':conversationId?', lastConversationId), clickCallback);
+  const promptsLinkHandler = useCustomLink(relativePaths.dashboardPrompts);
 
   const isPromptsPath = useMemo(
     () => promptsPathPattern.test(location.pathname),

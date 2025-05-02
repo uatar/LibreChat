@@ -16,6 +16,7 @@ import { useDeleteConversationMutation } from '~/data-provider';
 import { useLocalize, useNewConvo } from '~/hooks';
 import { NotificationSeverity } from '~/common';
 import { useToastContext } from '~/Providers';
+import { relativePaths } from '~/routes/RoutePaths';
 
 type DeleteButtonProps = {
   conversationId: string;
@@ -49,7 +50,7 @@ export function DeleteConversationDialog({
       setShowDeleteDialog(false);
       if (currentConvoId === conversationId || currentConvoId === 'new') {
         newConversation();
-        navigate('/c/new', { replace: true });
+        navigate(relativePaths.newConversation, { replace: true });
       }
       retainView();
     },

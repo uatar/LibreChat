@@ -11,6 +11,7 @@ import VariablesDropdown from '~/components/Prompts/VariablesDropdown';
 import Command from '~/components/Prompts/Command';
 import { useCreatePrompt } from '~/data-provider';
 import { cn } from '~/utils';
+import { relativePaths } from '~/routes/RoutePaths';
 
 type CreateFormValues = {
   name: string;
@@ -46,7 +47,7 @@ const CreatePromptForm = ({
     let timeoutId: ReturnType<typeof setTimeout>;
     if (!hasAccess) {
       timeoutId = setTimeout(() => {
-        navigate('/c/new');
+        navigate(relativePaths.newConversation);
       }, 1000);
     }
     return () => {
@@ -70,7 +71,7 @@ const CreatePromptForm = ({
 
   const createPromptMutation = useCreatePrompt({
     onSuccess: (response) => {
-      navigate(`/d/prompts/${response.prompt.groupId}`, { replace: true });
+      navigate(relativePaths.dashboardPromptsGroup.replace(':groupId', response.prompt.groupId), { replace: true });
     },
   });
 

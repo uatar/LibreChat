@@ -9,6 +9,7 @@ import OGDialogTemplate from '~/components/ui/OGDialogTemplate';
 import { useLocalize, useAuthContext } from '~/hooks';
 import { TrashIcon } from '~/components/svg';
 import { cn } from '~/utils/';
+import { relativePaths } from "~/routes/RoutePaths";
 
 interface DashGroupItemProps {
   group: TPromptGroup;
@@ -41,7 +42,7 @@ function DashGroupItemComponent({ group, instanceProjectId }: DashGroupItemProps
   const deleteGroup = useDeletePromptGroup({
     onSuccess: (_response, variables) => {
       if (variables.id === group._id) {
-        navigate('/d/prompts');
+        navigate(relativePaths.dashboardPrompts);
       }
     },
   });
@@ -57,7 +58,7 @@ function DashGroupItemComponent({ group, instanceProjectId }: DashGroupItemProps
     (e: KeyboardEvent<HTMLDivElement>) => {
       if (e.key === 'Enter') {
         e.preventDefault();
-        navigate(`/d/prompts/${group._id}`, { replace: true });
+        navigate(relativePaths.dashboardPromptsGroup.replace(':groupId', group._id), { replace: true });
       }
     },
     [group._id, navigate],
@@ -68,7 +69,7 @@ function DashGroupItemComponent({ group, instanceProjectId }: DashGroupItemProps
   }, [group._id, deleteGroup]);
 
   const handleContainerClick = useCallback(() => {
-    navigate(`/d/prompts/${group._id}`, { replace: true });
+    navigate(relativePaths.dashboardPromptsGroup.replace(':groupId', group._id), { replace: true });
   }, [group._id, navigate]);
 
   return (

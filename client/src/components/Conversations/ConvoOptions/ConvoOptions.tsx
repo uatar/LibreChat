@@ -15,6 +15,7 @@ import { NotificationSeverity } from '~/common';
 import DeleteButton from './DeleteButton';
 import ShareButton from './ShareButton';
 import { cn } from '~/utils';
+import { relativePaths } from '~/routes/RoutePaths';
 
 function ConvoOptions({
   conversationId,
@@ -96,7 +97,7 @@ function ConvoOptions({
         onSuccess: () => {
           if (currentConvoId === convoId || currentConvoId === 'new') {
             newConversation();
-            navigate('/c/new', { replace: true });
+            navigate(relativePaths.newConversation, { replace: true });
           }
           retainView();
           setIsPopoverActive(false);

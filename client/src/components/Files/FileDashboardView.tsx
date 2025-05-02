@@ -2,6 +2,7 @@ import React from 'react';
 import VectorStoreSidePanel from './VectorStore/VectorStoreSidePanel';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import { Button } from '../ui';
+import { relativePaths } from '~/routes/RoutePaths';
 
 const FileDashboardView = () => {
   const params = useParams();
@@ -15,7 +16,7 @@ const FileDashboardView = () => {
             variant={'outline'}
             size={'sm'}
             onClick={() => {
-              navigate('/d');
+              navigate(relativePaths.dashboard);
             }}
           >
             Go back

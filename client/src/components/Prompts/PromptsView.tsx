@@ -6,6 +6,7 @@ import DashBreadcrumb from '~/routes/Layouts/DashBreadcrumb';
 import { usePromptGroupsNav, useHasAccess } from '~/hooks';
 import GroupSidePanel from './Groups/GroupSidePanel';
 import { cn } from '~/utils';
+import { relativePaths } from "~/routes/RoutePaths";
 
 export default function PromptsView() {
   const params = useParams();
@@ -21,7 +22,7 @@ export default function PromptsView() {
     let timeoutId: ReturnType<typeof setTimeout>;
     if (!hasAccess) {
       timeoutId = setTimeout(() => {
-        navigate('/c/new');
+        navigate(relativePaths.newConversation);
       }, 1000);
     }
     return () => {

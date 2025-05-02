@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '~/hooks';
-import { fullPaths } from '~/routes/RoutePaths';
+import { relativePaths } from '~/routes/RoutePaths';
 
 export default function useAuthRedirect() {
   const { user, isAuthenticated } = useAuthContext();
@@ -10,7 +10,7 @@ export default function useAuthRedirect() {
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (!isAuthenticated) {
-        navigate(fullPaths.login, { replace: true });
+        navigate(relativePaths.login, { replace: true });
       }
     }, 300);
 

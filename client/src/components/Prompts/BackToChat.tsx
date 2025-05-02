@@ -3,6 +3,7 @@ import { ArrowLeft } from 'lucide-react';
 import { buttonVariants } from '~/components/ui';
 import { useLocalize } from '~/hooks';
 import { cn } from '~/utils';
+import { relativePaths } from '~/routes/RoutePaths';
 
 export default function BackToChat({ className }: { className?: string }) {
   const navigate = useNavigate();
@@ -10,7 +11,7 @@ export default function BackToChat({ className }: { className?: string }) {
   const clickHandler = (event: React.MouseEvent<HTMLAnchorElement>) => {
     if (event.button === 0 && !(event.ctrlKey || event.metaKey)) {
       event.preventDefault();
-      navigate('/c/new');
+      navigate(relativePaths.newConversation);
     }
   };
   return (

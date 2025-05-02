@@ -4,6 +4,7 @@ import { useLocalize, useCustomLink } from '~/hooks';
 import { Button } from '~/components/ui';
 import { cn } from '~/utils';
 import store from '~/store';
+import { relativePaths } from '~/routes/RoutePaths';
 
 export default function ManagePrompts({ className }: { className?: string }) {
   const localize = useLocalize();
@@ -14,7 +15,7 @@ export default function ManagePrompts({ className }: { className?: string }) {
     setPromptsCategory('');
   }, [setPromptsName, setPromptsCategory]);
 
-  const customLink = useCustomLink('/d/prompts', clickCallback);
+  const customLink = useCustomLink(relativePaths.dashboardPrompts, clickCallback);
   const clickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     customLink(e as unknown as React.MouseEvent<HTMLAnchorElement>);
   };

@@ -9,6 +9,7 @@ import { getDefaultModelSpec, getModelSpecPreset } from '~/utils';
 import { TooltipAnchor, Button } from '~/components/ui';
 import { useLocalize, useNewConvo } from '~/hooks';
 import store from '~/store';
+import { relativePaths, fullPaths } from '~/routes/RoutePaths';
 
 export default function NewChat({
   index = 0,
@@ -33,7 +34,7 @@ export default function NewChat({
   const clickHandler: React.MouseEventHandler<HTMLButtonElement> = useCallback(
     (e) => {
       if (e.button === 0 && (e.ctrlKey || e.metaKey)) {
-        window.open('/c/new', '_blank');
+        window.open(fullPaths.newConversation, '_blank');
         return;
       }
       queryClient.setQueryData<TMessage[]>(
@@ -42,7 +43,7 @@ export default function NewChat({
       );
       queryClient.invalidateQueries([QueryKeys.messages]);
       newConvo();
-      navigate('/c/new', { state: { focusChat: true } });
+      navigate(relativePaths.newConversation, { state: { focusChat: true } });
       if (isSmallScreen) {
         toggleNav();
       }

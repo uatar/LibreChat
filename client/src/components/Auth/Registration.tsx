@@ -7,7 +7,7 @@ import type { TLoginLayoutContext } from '~/common';
 import { ErrorMessage } from './ErrorMessage';
 import { Spinner } from '~/components/svg';
 import { useLocalize, TranslationKeys } from '~/hooks';
-import { fullPaths } from '~/routes/RoutePaths';
+import { relativePaths, fullPaths } from '~/routes/RoutePaths';
 
 const Registration: React.FC = () => {
   const navigate = useNavigate();
@@ -41,7 +41,7 @@ const Registration: React.FC = () => {
         setCountdown((prevCountdown) => {
           if (prevCountdown <= 1) {
             clearInterval(timer);
-            navigate(fullPaths.newConversation, { replace: true });
+            navigate(relativePaths.newConversation, { replace: true });
             return 0;
           } else {
             return prevCountdown - 1;

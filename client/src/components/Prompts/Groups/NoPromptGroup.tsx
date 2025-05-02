@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Button } from '~/components/ui';
 import { useLocalize } from '~/hooks';
+import { relativePaths } from '~/routes/RoutePaths';
 
 export default function NoPromptGroup() {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ export default function NoPromptGroup() {
           <Button
             className="mt-4"
             onClick={() => {
-              navigate('/d/prompts');
+              navigate(relativePaths.dashboardPrompts);
             }}
           >
             {localize('com_ui_back_to_prompts')}

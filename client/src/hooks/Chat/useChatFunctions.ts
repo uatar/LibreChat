@@ -28,6 +28,7 @@ import { getEndpointField, logger } from '~/utils';
 import useUserKey from '~/hooks/Input/useUserKey';
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '~/hooks';
+import { relativePaths } from "~/routes/RoutePaths";
 
 const logChatRequest = (request: Record<string, unknown>) => {
   logger.log('=====================================\nAsk function called with:');
@@ -157,7 +158,7 @@ export default function useChatFunctions({
       parentMessageId = Constants.NO_PARENT;
       currentMessages = [];
       conversationId = null;
-      navigate('/c/new', { state: { focusChat: true } });
+      navigate(relativePaths.newConversation, { state: { focusChat: true } });
     }
 
     const targetParentMessageId = isRegenerate ? messageId : latestMessage?.parentMessageId;

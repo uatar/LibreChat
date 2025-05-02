@@ -8,6 +8,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useLocalize, useNewConvo } from '~/hooks';
 import { cn } from '~/utils';
 import store from '~/store';
+import { relativePaths, fullPaths } from "~/routes/RoutePaths";
 
 type SearchBarProps = {
   isSmallScreen?: boolean;
@@ -28,9 +29,9 @@ const SearchBar = forwardRef((props: SearchBarProps, ref: React.Ref<HTMLDivEleme
   const [search, setSearchState] = useRecoilState(store.search);
 
   const clearSearch = useCallback(() => {
-    if (location.pathname.includes('/search')) {
+    if (location.pathname.includes(relativePaths.search)) {
       newConversation({ disableFocus: true });
-      navigate('/c/new', { replace: true });
+      navigate(relativePaths.newConversation, { replace: true });
     }
   }, [newConversation, location.pathname, navigate]);
 
@@ -83,10 +84,10 @@ const SearchBar = forwardRef((props: SearchBarProps, ref: React.Ref<HTMLDivEleme
       isTyping: true,
     }));
     debouncedSetDebouncedQuery(value);
-    if (value.length > 0 && location.pathname !== '/search') {
-      navigate('/search', { replace: true });
-    } else if (value.length === 0 && location.pathname === '/search') {
-      navigate('/c/new', { replace: true });
+    if (value.length > 0 && location.pathname !== fullPaths.search) {
+      navigate(relativePaths.search, { replace: true });
+    } else if (value.length === 0 && location.pathname === fullPaths.search) {
+      navigate(relativePaths.newConversation, { replace: true });
     }
   };
 
